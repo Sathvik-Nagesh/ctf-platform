@@ -9,8 +9,7 @@
     "client": "cd client && npm start",
     "build": "bash build.sh",
     "install-all": "npm install && cd server && npm install && cd ../client && npm install",
-    "start": "cd server && npm start",
-    "postinstall": "cd server && npm install && cd ../client && npm install"
+    "start": "cd server && npm start"
   },
   "keywords": [
     "ctf",
