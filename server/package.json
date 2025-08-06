@@ -1,0 +1,31 @@
+{
+  "name": "gitxtribe-ctf-server",
+  "version": "1.0.0",
+  "description": "Backend server for GitXTribe CTF Platform",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["ctf", "backend", "express", "firebase"],
+  "author": "GitXTribe Technical Club",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "bcryptjs": "^2.4.3",
+    "multer": "^1.4.5-lts.1",
+    "firebase-admin": "^11.11.0",
+    "express-rate-limit": "^7.1.5",
+    "helmet": "^7.1.0",
+    "compression": "^1.7.4",
+    "morgan": "^1.10.0",
+    "uuid": "^9.0.1",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+} 

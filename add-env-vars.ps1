@@ -1,0 +1,23 @@
+# PowerShell script to add all environment variables to Vercel
+
+Write-Host "Adding Firebase environment variables to Vercel..." -ForegroundColor Green
+
+# Firebase Configuration
+vercel env add FIREBASE_PROJECT_ID production --value "gitxtribe-ctf"
+vercel env add FIREBASE_PRIVATE_KEY_ID production --value "e989e6a8723ae3541fd9c20b0f8ed39ea48c45ef"
+vercel env add FIREBASE_PRIVATE_KEY production --value "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCqB44Lc+4jdWve\nIV5tVrvYQqAgXnx5nD2swzA0784fjanBQOdJCZlw+xNFWYLrOQfaSWFIggZuBlS5\n2FEhZsqxhjtKwBb1krDYhvXFywWnT3Fwf+CiG4yZi4bymtFffRpZ6kkjUqhFLCul\nygpipX3ztcpQeXyRpSzfl+2rrb3+BDLGO6JZrR8G1WM7nF/1ptuYYbzFZpnK7Atw\nqV3W8nTwtVMufGCf5wQUHh9PbQrPTAg7wSl3bG1UqvAqhQvJLfAoRXOwEuHPu1Ne\nKuB/Es8vkgP93VmHce1fCx5Vyp501d4KmHYpwu68l+BbmxeY3Sax/bOVSNLZQvfA\n5e/UPJZFAgMBAAECggEADIzpNbw1cEWbFDbnVu/HhtOIKUuAKaPYQ5fWx5mJ3/df\nd+XYDKKaQmYuCnjsentnsnunJCiA2/84os0uU+ZYANmVJ9Pc/fx5dEol+xcc0DhD\nedfel2isLKtJZz/5Q3CjEM8D3gkcZZq4kBDFSnnHvcUF7YHCKagFE24N+5WkCAtd\neqHPXm9CrKhT/WNl5ZhyLdQa/JTexKwEcYQqg+xtN8yxYw5Mj98TLO4PA7NLQQZm\ndDa+SDabC5aDXeQykHKSPyBe/JUOd+W25a26IxDl9YkRBhHQ4QbqVg+Xbtwk0r0+\nhXLHeXLP5cy143AEzG6r1M61gt0/DeWE19fGikj34wKBgQDWEz9JevTUUCqL7mk+\nMs78F5W4WJtHMPSp5UoiMKa3AHyGy2hZ7jsgufxaTMFt5dBGh5kN4C6wExyNB314\ni+fh7IKFcU8VVCXXfbP00QK52oh+Wb80+vyaCa+yBI/jtB9Ywf40EQnYV4MAJP+Y\nDvkV14fKzmVM4aQlCDDfSnFiTwKBgQDLVA8AWTj8vYv7Hev3SxFACnq9+ow5QCVq\nTQbNXBrxO3PEiq3OHRdx/1XfRX3rRQAOuP0H/Hudi/wlQIdulatOu3o2dPPY697J\n8Hdajt1buBoVNJ+/Dn5NfK4wrdyTR93n3Plb/SL2PXcclkqfxPpAdLhOkH/8PFVA\ndU65RSf9KwKBgHTuHHJxc8uIYkT+m4O60u5Fn6UK2P4A0pL+SAj21Ak/fcVO05fT\nlX5huGJGbJ0vmxz7MfGvUzEfr0elILa4jJcNzZk/8/dteCIFakc95yRHJqkFMnio\n41LsGYi+Dy5ME5cylzwvVlZSLp7klqui+hEhIe334MMmuLb1i2Rb0CTnAoGBAIqr\nUW/TaeI1A3rH9V46fBFJFFzsuyVwchQFZFY6MsXC3jl0uwSPIqZElbQoGLCT5m4k\nC62erE/OYLCnSbZJrQONKNRq/sM6Wj8vGLdSJ/WdoWxE743FvK3sEoBwkrZ/lP/E\n3Ou3wFhfoxSEC3DbTjEXaXtrYV4NZ7cGSiJg39zxAoGARIu9/t3OqRb0GOD/cS7W\nePtzwwN7GH1Q83hcMHUqdlqVpslGLfWhVWsTzkSiZhy05hMtVRC4SZGwO+Zi5HEG\nfaPmIQEPKp4WyxUUc+i4/uKl4b2bIfIHA3QgFn8YTR5uh9ivOGRxj658MGjJi07c\nGkv0m1/h2r5ZhrfazsNlvIE=\n-----END PRIVATE KEY-----\n"
+vercel env add FIREBASE_CLIENT_EMAIL production --value "firebase-adminsdk-fbsvc@gitxtribe-ctf.iam.gserviceaccount.com"
+vercel env add FIREBASE_CLIENT_ID production --value "112562403654655399622"
+vercel env add FIREBASE_CLIENT_CERT_URL production --value "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40gitxtribe-ctf.iam.gserviceaccount.com"
+vercel env add FIREBASE_STORAGE_BUCKET production --value "gitxtribe-ctf.appspot.com"
+
+# Admin Configuration
+vercel env add ADMIN_USERNAME production --value "Admin"
+vercel env add ADMIN_PASSWORD production --value "pavanrocks"
+
+# Server Configuration
+vercel env add PORT production --value "5000"
+vercel env add NODE_ENV production --value "production"
+
+Write-Host "All environment variables added successfully!" -ForegroundColor Green
+Write-Host "Now redeploy your project with: vercel --prod" -ForegroundColor Yellow 
