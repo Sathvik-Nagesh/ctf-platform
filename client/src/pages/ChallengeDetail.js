@@ -61,40 +61,28 @@ export default function ChallengeDetail() {
     }
   };
 
-  const downloadFile = async (filename) => {
+  const downloadFile = async (fileName) => {
     try {
-      // Fetch the file as a blob
-      const response = await fetch(`/api/files/download/${filename}`);
-      
+      const response = await fetch(`/api/files/download/${fileName}`);
       if (!response.ok) {
-        throw new Error('Failed to download file');
+        throw new Error('Download failed');
       }
       
-      // Get the blob
       const blob = await response.blob();
-      
-      // Create a blob URL
       const url = window.URL.createObjectURL(blob);
-      
-      // Create a temporary link element
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = filename;
-      
-      // Append to body, click, and remove
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      
-      // Clean up the blob URL
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
       window.URL.revokeObjectURL(url);
-      
+      document.body.removeChild(a);
     } catch (error) {
       console.error('Download error:', error);
       // Fallback to direct link
       const link = document.createElement('a');
-      link.href = `/api/files/download/${filename}`;
-      link.download = filename;
+      link.href = `/api/files/download/${fileName}`;
+      link.download = fileName;
       link.target = '_blank';
       document.body.appendChild(link);
       link.click();
@@ -169,7 +157,6 @@ export default function ChallengeDetail() {
                   const fileName = file.filename || file.originalName || file;
                   const fileExt = fileName.split('.').pop()?.toLowerCase();
                   const isImage = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'svg'].includes(fileExt);
-                  const isViewable = ['txt', 'html', 'css', 'js', 'json', 'xml', 'pdf'].includes(fileExt);
                   
                   return (
                     <div key={index} className="border rounded p-4">

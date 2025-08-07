@@ -40,29 +40,22 @@ export const AuthProvider = ({ children }) => {
   // Team login
   const login = async (teamName, password) => {
     try {
-      const response = await axios.post('/api/auth/login', {
-        teamName,
-        password
-      });
-
+      setLoading(true);
+      const response = await axios.post('/api/auth/login', { teamName, password });
       const userData = {
-        ...response.data.team,
-        teamName: response.data.team.name, // Map name to teamName for consistency
-        password, // Store password for auth headers
-        isAdmin: false,
-        type: 'team'
+        ...response.data.user,
+        teamName: response.data.user.teamName || response.data.user.name
       };
-
-      console.log('AuthContext - Login response:', response.data);
-      console.log('AuthContext - Created user data:', userData);
       setUser(userData);
-      localStorage.setItem('ctf_user', JSON.stringify(userData));
+      localStorage.setItem('user', JSON.stringify(userData));
       toast.success('Login successful!');
-      return userData;
+      return true;
     } catch (error) {
-      const message = error.response?.data?.error || 'Login failed';
-      toast.error(message);
-      throw error;
+      console.error('Login error:', error);
+      toast.error(error.response?.data?.message || 'Login failed');
+      return false;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -95,28 +88,22 @@ export const AuthProvider = ({ children }) => {
   // Team registration
   const register = async (teamName, password, members) => {
     try {
-      const response = await axios.post('/api/auth/register', {
-        teamName,
-        password,
-        members
-      });
-
+      setLoading(true);
+      const response = await axios.post('/api/auth/register', { teamName, password, members });
       const userData = {
-        ...response.data.team,
-        teamName: response.data.team.name, // Map name to teamName for consistency
-        password, // Store password for auth headers
-        isAdmin: false,
-        type: 'team'
+        ...response.data.user,
+        teamName: response.data.user.teamName || response.data.user.name
       };
-
       setUser(userData);
-      localStorage.setItem('ctf_user', JSON.stringify(userData));
+      localStorage.setItem('user', JSON.stringify(userData));
       toast.success('Registration successful!');
-      return userData;
+      return true;
     } catch (error) {
-      const message = error.response?.data?.error || 'Registration failed';
-      toast.error(message);
-      throw error;
+      console.error('Registration error:', error);
+      toast.error(error.response?.data?.message || 'Registration failed');
+      return false;
+    } finally {
+      setLoading(false);
     }
   };
 

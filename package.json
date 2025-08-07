@@ -8,6 +8,7 @@
     "server": "cd server && npm run dev",
     "client": "cd client && npm start",
     "build": "bash build.sh",
+    "build:vercel": "bash build-vercel.sh",
     "install-all": "npm install && cd server && npm install && cd ../client && npm install",
     "start": "cd server && npm start"
   },

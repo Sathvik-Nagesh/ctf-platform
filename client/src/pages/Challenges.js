@@ -12,16 +12,8 @@ export default function Challenges() {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    const loadChallenges = async () => {
-      try {
-        await fetchChallenges();
-      } catch (error) {
-        console.error('Load challenges error:', error);
-      }
-    };
-
-    loadChallenges();
-  }, []); // Remove fetchChallenges dependency to prevent infinite re-renders
+    fetchChallenges();
+  }, [fetchChallenges]);
 
   useEffect(() => {
     // Extract unique categories

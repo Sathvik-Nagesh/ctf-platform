@@ -18,13 +18,6 @@ export default function Leaderboard() {
     return `#${rank}`;
   };
 
-  const getRankColor = (rank) => {
-    if (rank === 1) return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-    if (rank === 2) return 'bg-gray-100 text-gray-800 border-gray-200';
-    if (rank === 3) return 'bg-orange-100 text-orange-800 border-orange-200';
-    return 'bg-white text-gray-900 border-gray-200';
-  };
-
   if (loading) {
     return <LoadingSpinner text="Loading leaderboard..." />;
   }

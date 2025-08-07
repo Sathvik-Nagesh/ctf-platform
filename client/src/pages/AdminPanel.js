@@ -5,7 +5,7 @@ import { useLeaderboard } from '../context/LeaderboardContext';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 export default function AdminPanel() {
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
   const { challenges, fetchChallenges } = useChallenges();
   const { leaderboard, fetchLeaderboard } = useLeaderboard();
   
