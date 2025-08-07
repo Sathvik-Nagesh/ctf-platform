@@ -18,6 +18,11 @@ const fileRoutes = require('./routes/files');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+console.log('🔧 Environment Variables:');
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('PORT:', process.env.PORT);
+console.log('Using PORT:', PORT);
+
 // Security middleware
 app.use(helmet({
   contentSecurityPolicy: false, // Disable CSP for development
