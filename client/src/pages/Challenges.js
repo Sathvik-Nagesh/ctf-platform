@@ -13,6 +13,7 @@ export default function Challenges() {
 
   useEffect(() => {
     fetchChallenges();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Remove fetchChallenges dependency to prevent infinite loops
 
   useEffect(() => {

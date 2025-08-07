@@ -24,6 +24,7 @@ export const AuthProvider = ({ children }) => {
       console.log('AuthContext - Loaded user data:', userData);
       setUser(userData);
     }
+    setLoading(false); // Set loading to false after checking localStorage
   }, []);
 
   // Team login
@@ -107,7 +108,7 @@ export const AuthProvider = ({ children }) => {
   // Update user profile
   const updateProfile = async (updates) => {
     try {
-      const response = await axios.put('/api/auth/profile', {
+      await axios.put('/api/auth/profile', {
         teamName: user.name,
         ...updates
       });

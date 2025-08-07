@@ -2,11 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import axios from 'axios';
 import './index.css';
 import App from './App';
 import { AuthProvider } from './context/AuthContext';
 import { ChallengeProvider } from './context/ChallengeContext';
 import { LeaderboardProvider } from './context/LeaderboardContext';
+
+// Configure axios base URL for production
+if (process.env.NODE_ENV === 'production') {
+  axios.defaults.baseURL = window.location.origin;
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
