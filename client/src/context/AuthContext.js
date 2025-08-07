@@ -18,23 +18,12 @@ export const AuthProvider = ({ children }) => {
 
   // Check for existing session on mount
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const savedUser = localStorage.getItem('ctf_user');
-        if (savedUser) {
-          const userData = JSON.parse(savedUser);
-          console.log('AuthContext - Loaded user data:', userData);
-          setUser(userData);
-        }
-      } catch (error) {
-        console.error('Auth check error:', error);
-        localStorage.removeItem('ctf_user');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    checkAuth();
+    const savedUser = localStorage.getItem('user');
+    if (savedUser) {
+      const userData = JSON.parse(savedUser);
+      console.log('AuthContext - Loaded user data:', userData);
+      setUser(userData);
+    }
   }, []);
 
   // Team login
@@ -62,12 +51,13 @@ export const AuthProvider = ({ children }) => {
   // Admin login
   const adminLogin = async (username, password) => {
     try {
-      const response = await axios.post('/api/admin/login', {
+      const response = await axios.post('/api/auth/admin/login', {
         username,
         password
       });
 
       const userData = {
+        ...response.data.admin,
         username,
         password, // Store password for auth headers
         isAdmin: true,
@@ -75,7 +65,7 @@ export const AuthProvider = ({ children }) => {
       };
 
       setUser(userData);
-      localStorage.setItem('ctf_user', JSON.stringify(userData));
+      localStorage.setItem('user', JSON.stringify(userData));
       toast.success('Admin login successful!');
       return userData;
     } catch (error) {
@@ -110,7 +100,7 @@ export const AuthProvider = ({ children }) => {
   // Logout
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('ctf_user');
+    localStorage.removeItem('user');
     toast.success('Logged out successfully');
   };
 
@@ -124,7 +114,7 @@ export const AuthProvider = ({ children }) => {
 
       const updatedUser = { ...user, ...updates };
       setUser(updatedUser);
-      localStorage.setItem('ctf_user', JSON.stringify(updatedUser));
+      localStorage.setItem('user', JSON.stringify(updatedUser));
       toast.success('Profile updated successfully!');
       return updatedUser;
     } catch (error) {
@@ -143,7 +133,7 @@ export const AuthProvider = ({ children }) => {
 
       const updatedUser = { ...user, ...response.data.team };
       setUser(updatedUser);
-      localStorage.setItem('ctf_user', JSON.stringify(updatedUser));
+      localStorage.setItem('user', JSON.stringify(updatedUser));
       return updatedUser;
     } catch (error) {
       console.error('Get profile error:', error);

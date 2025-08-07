@@ -13,7 +13,7 @@ export default function Challenges() {
 
   useEffect(() => {
     fetchChallenges();
-  }, [fetchChallenges]);
+  }, []); // Remove fetchChallenges dependency to prevent infinite loops
 
   useEffect(() => {
     // Extract unique categories

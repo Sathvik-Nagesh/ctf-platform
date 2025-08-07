@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
@@ -19,7 +19,7 @@ export const ChallengeProvider = ({ children }) => {
   const [selectedCategory, setSelectedCategory] = useState('all');
 
   // Fetch all challenges
-  const fetchChallenges = async () => {
+  const fetchChallenges = useCallback(async () => {
     try {
       setLoading(true);
       const response = await axios.get('/api/challenges');
@@ -38,10 +38,10 @@ export const ChallengeProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   // Fetch single challenge
-  const fetchChallenge = async (id) => {
+  const fetchChallenge = useCallback(async (id) => {
     try {
       const response = await axios.get(`/api/challenges/${id}`);
       return response.data;
@@ -50,26 +50,23 @@ export const ChallengeProvider = ({ children }) => {
       toast.error('Failed to fetch challenge');
       throw error;
     }
-  };
+  }, []);
 
   // Submit flag
-  const submitFlag = async (challengeId, flag) => {
+  const submitFlag = useCallback(async (challengeId, flag) => {
     try {
       // Get user data from localStorage for authentication
-      const savedUser = localStorage.getItem('ctf_user');
+      const savedUser = localStorage.getItem('user');
       if (!savedUser) {
         throw new Error('User not authenticated');
       }
       
       const userData = JSON.parse(savedUser);
-      if (userData.type !== 'team') {
-        throw new Error('Only teams can submit flags');
-      }
 
       const response = await axios.post('/api/submissions/flag', {
         challengeId,
         flag,
-        teamName: userData.name,
+        teamName: userData.teamName || userData.name,
         password: userData.password
       });
 
@@ -80,7 +77,7 @@ export const ChallengeProvider = ({ children }) => {
             return {
               ...challenge,
               solvedCount: (challenge.solvedCount || 0) + 1,
-              solvedBy: [...(challenge.solvedBy || []), userData.name]
+              solvedBy: [...(challenge.solvedBy || []), userData.teamName || userData.name]
             };
           }
           return challenge;
@@ -99,24 +96,21 @@ export const ChallengeProvider = ({ children }) => {
       const message = error.response?.data?.error || 'Failed to submit flag';
       throw new Error(message);
     }
-  };
+  }, []);
 
   // Get team submissions
-  const getTeamSubmissions = async () => {
+  const getTeamSubmissions = useCallback(async () => {
     try {
       // Get user data from localStorage for authentication
-      const savedUser = localStorage.getItem('ctf_user');
+      const savedUser = localStorage.getItem('user');
       if (!savedUser) {
         throw new Error('User not authenticated');
       }
       
       const userData = JSON.parse(savedUser);
-      if (userData.type !== 'team') {
-        throw new Error('Only teams can view submissions');
-      }
 
       const response = await axios.post('/api/submissions/team', {
-        teamName: userData.name,
+        teamName: userData.teamName || userData.name,
         password: userData.password
       });
       return response.data;
@@ -124,7 +118,7 @@ export const ChallengeProvider = ({ children }) => {
       console.error('Get team submissions error:', error);
       throw error;
     }
-  };
+  }, []);
 
   // Filter challenges by category
   const filteredChallenges = selectedCategory === 'all' 
@@ -132,7 +126,7 @@ export const ChallengeProvider = ({ children }) => {
     : (challenges || []).filter(challenge => challenge.category === selectedCategory);
 
   // Get solved challenges for current team
-  const getSolvedChallenges = async () => {
+  const getSolvedChallenges = useCallback(async () => {
     try {
       const submissions = await getTeamSubmissions();
       const solvedSubmissions = submissions.filter(s => s.correct);
@@ -141,26 +135,26 @@ export const ChallengeProvider = ({ children }) => {
       console.error('Get solved challenges error:', error);
       return [];
     }
-  };
+  }, [getTeamSubmissions]);
 
   // Check if challenge is solved
-  const isChallengeSolved = (challengeId) => {
+  const isChallengeSolved = useCallback((challengeId) => {
     // This would check against team submissions
     return false;
-  };
+  }, []);
 
   // Get challenge statistics
-  const getChallengeStats = () => {
+  const getChallengeStats = useCallback(() => {
     const total = challenges?.length || 0;
     const active = challenges?.filter(c => c.isActive)?.length || 0;
     
     return { total, active, solved: 0 }; // solved will be calculated in Dashboard
-  };
+  }, [challenges]);
 
   // Load challenges on mount
   useEffect(() => {
     fetchChallenges();
-  }, []);
+  }, [fetchChallenges]);
 
   const value = {
     challenges: filteredChallenges || [],
