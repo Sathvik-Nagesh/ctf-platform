@@ -8,9 +8,10 @@
     "server": "cd server && npm run dev",
     "client": "cd client && npm start",
     "build": "npm install && cd server && npm install && cd ../client && npm install && cd ../client && npm run build && cd .. && cp -r client/build .",
+    "build:railway": "bash build-railway.sh",
     "build:vercel": "bash build-vercel.sh",
     "install-all": "npm install && cd server && npm install && cd ../client && npm install",
-    "start": "cd server && npm start",
+    "start": "node server/index.js",
     "postinstall": "cd server && npm install && cd ../client && npm install"
   },
   "keywords": [

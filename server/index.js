@@ -65,12 +65,21 @@ app.get('/api/health', (req, res) => {
 
 // Serve static files from React build in production
 if (process.env.NODE_ENV === 'production') {
+  const buildPath = path.join(__dirname, '../build');
+  const indexPath = path.join(buildPath, 'index.html');
+  
+  console.log('🔧 Production Build Check:');
+  console.log('Build path:', buildPath);
+  console.log('Index path:', indexPath);
+  console.log('Build exists:', require('fs').existsSync(buildPath));
+  console.log('Index exists:', require('fs').existsSync(indexPath));
+  
   // Serve static files from the React build
-  app.use(express.static(path.join(__dirname, '../build')));
+  app.use(express.static(buildPath));
   
   // Handle React routing, return all requests to React app
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../build', 'index.html'));
+    res.sendFile(indexPath);
   });
 } else {
   // 404 handler (only for API routes in development)
