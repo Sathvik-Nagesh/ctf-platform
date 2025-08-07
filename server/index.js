@@ -67,6 +67,11 @@ if (process.env.NODE_ENV === 'production') {
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../build', 'index.html'));
   });
+} else {
+  // 404 handler (only for API routes in development)
+  app.use('*', (req, res) => {
+    res.status(404).json({ error: 'Route not found' });
+  });
 }
 
 // Error handling middleware
@@ -78,15 +83,8 @@ app.use((err, req, res, next) => {
   });
 });
 
-// 404 handler (only for API routes in development)
-if (process.env.NODE_ENV !== 'production') {
-  app.use('*', (req, res) => {
-    res.status(404).json({ error: 'Route not found' });
-  });
-}
-
 // Start server
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 GitXTribe CTF Server running on port ${PORT}`);
   console.log(`📊 Health check: http://localhost:${PORT}/api/health`);
   console.log(`📁 File uploads: http://localhost:${PORT}/uploads/`);
