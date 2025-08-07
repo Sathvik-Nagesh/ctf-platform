@@ -10,7 +10,8 @@
     "build": "bash build.sh",
     "build:vercel": "bash build-vercel.sh",
     "install-all": "npm install && cd server && npm install && cd ../client && npm install",
-    "start": "cd server && npm start"
+    "start": "cd server && npm start",
+    "postinstall": "cd server && npm install && cd ../client && npm install"
   },
   "keywords": [
     "ctf",
